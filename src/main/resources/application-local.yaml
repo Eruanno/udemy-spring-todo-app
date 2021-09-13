@@ -3,4 +3,4 @@ spring:
   h2.console:
     enabled: true
     path: '/console'
-  jpa.hibernate.ddl-auto: create
+  jpa.hibernate.ddl-auto: validate
