@@ -1,0 +1,6 @@
+spring:
+  datasource.url: 'jdbc:h2:file:C:/Users/Eruanno/Downloads/todo-app/todo-db'
+  h2.console:
+    enabled: true
+    path: '/console'
+  jpa.hibernate.ddl-auto: create
