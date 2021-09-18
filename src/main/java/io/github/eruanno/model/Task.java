@@ -1,41 +1,42 @@
 package io.github.eruanno.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
-public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @NotBlank(message = "Task's description must not be empty")
-    private String description;
-    private boolean done;
+public class Task extends AuditableResource {
+    private LocalDateTime deadline;
+    @ManyToOne
+    @JoinColumn(name = "task_group_id")
+    private TaskGroup group;
 
-    Task() {}
-
-    public int getId() {
-        return id;
+    public Task() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public LocalDateTime getDeadline() {
+        return deadline;
     }
 
-    public String getDescription() {
-        return description;
+    public void setDeadline(final LocalDateTime deadline) {
+        this.deadline = deadline;
     }
 
-    void setDescription(String description) {
-        this.description = description;
+    TaskGroup getGroup() {
+        return group;
     }
 
-    public boolean isDone() {
-        return done;
+    void setGroup(final TaskGroup group) {
+        this.group = group;
     }
 
-    void setDone(boolean done) {
-        this.done = done;
+    public void updateFrom(final Task source) {
+        this.setDescription(source.getDescription());
+        this.setDone(source.isDone());
+        deadline = source.deadline;
+        group = source.group;
     }
 }
