@@ -20,7 +20,7 @@ public class TaskGroup extends AuditableResource {
         return tasks;
     }
 
-    void setTasks(final Set<Task> tasks) {
+    public void setTasks(final Set<Task> tasks) {
         this.tasks = tasks;
     }
 
@@ -30,5 +30,10 @@ public class TaskGroup extends AuditableResource {
 
     void setProject(final Project project) {
         this.project = project;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        super.setDescription(description);
     }
 }
