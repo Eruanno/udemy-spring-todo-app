@@ -3,15 +3,11 @@ package io.github.eruanno.logic;
 import io.github.eruanno.TaskConfigurationProperties;
 import io.github.eruanno.model.*;
 import io.github.eruanno.model.projection.GroupReadModel;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequestScope
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final TaskGroupRepository taskGroupRepository;

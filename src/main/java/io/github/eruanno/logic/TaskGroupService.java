@@ -5,14 +5,10 @@ import io.github.eruanno.model.TaskGroupRepository;
 import io.github.eruanno.model.TaskRepository;
 import io.github.eruanno.model.projection.GroupReadModel;
 import io.github.eruanno.model.projection.GroupWriteModel;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequestScope
 public class TaskGroupService {
     private final TaskGroupRepository taskGroupRepository;
     private final TaskRepository taskRepository;
