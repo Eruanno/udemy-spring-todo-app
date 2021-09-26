@@ -18,8 +18,13 @@ public class Task extends AuditableResource {
     }
 
     public Task(final LocalDateTime deadline, final String description) {
+        this(deadline, description, null);
+    }
+
+    public Task(final LocalDateTime deadline, final String description, TaskGroup group) {
         this.deadline = deadline;
         this.setDescription(description);
+        this.setGroup(group);
     }
 
     public LocalDateTime getDeadline() {

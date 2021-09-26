@@ -3,10 +3,13 @@ package io.github.eruanno.logic;
 import io.github.eruanno.model.TaskGroup;
 import io.github.eruanno.model.TaskGroupRepository;
 import io.github.eruanno.model.TaskRepository;
+import org.assertj.core.util.Lists;
+import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -75,5 +78,33 @@ class TaskGroupServiceTest {
         TaskRepository mockTaskRepository = mock(TaskRepository.class);
         when(mockTaskRepository.existsByDoneIsFalseAndGroup_Id(anyInt())).thenReturn(b);
         return mockTaskRepository;
+    }
+
+    @Test
+    void additions() {
+        int number = 21;
+        Set<String> results = new HashSet<>();
+        for (int i = 1; i <= 9; i++) {
+            for (int j = 1; j <= 9; j++) {
+                for (int k = 1; k <= 9; k++) {
+                    for (int l = 1; l <= 9; l++) {
+                        for (int m = 1; m <= 9; m++) {
+                            if (Sets.newLinkedHashSet(i, j, k, l, m).size() == 5) {
+                                if (i + j + k + l + m == number) {
+                                    List<Integer> result = Lists.list(i, j, k, l, m);
+                                    result.sort(Comparator.naturalOrder());
+                                    String key = result.stream().map(String::valueOf)
+                                            .collect(Collectors.joining(","));
+                                    results.add(key);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(results.size());
+        System.out.println(results.stream().map(String::valueOf)
+                .collect(Collectors.joining("\n")));
     }
 }

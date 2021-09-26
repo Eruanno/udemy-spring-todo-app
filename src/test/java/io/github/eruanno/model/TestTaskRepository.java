@@ -3,6 +3,7 @@ package io.github.eruanno.model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class TestTaskRepository implements TaskRepository {
@@ -40,6 +41,15 @@ public class TestTaskRepository implements TaskRepository {
 
     @Override
     public Task save(final Task entity) {
-        return tasks.put(tasks.size() + 1, entity);
+        final int key = tasks.size() + 1;
+        try {
+            Field field = Task.class.getSuperclass().getSuperclass().getDeclaredField("id");
+            field.setAccessible(true);
+            field.set(entity, key);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        tasks.put(key, entity);
+        return tasks.get(key);
     }
 }

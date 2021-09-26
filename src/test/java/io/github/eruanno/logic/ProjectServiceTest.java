@@ -26,7 +26,7 @@ class ProjectServiceTest {
         // Arrange
         TaskGroupRepository mockGroupRepository = groupRepositoryReturning(true);
         var mockConfig = configurationReturning(false);
-        var sut = new ProjectService(null, mockGroupRepository, mockConfig);
+        var sut = new ProjectService(null, mockGroupRepository, mockConfig, null);
 
         // Act
         var exception = catchThrowable(() -> sut.createGroup(LocalDateTime.now(), 0));
@@ -43,7 +43,7 @@ class ProjectServiceTest {
         var mockProjectRepository = mock(ProjectRepository.class);
         when(mockProjectRepository.findById(anyInt())).thenReturn(Optional.empty());
         var mockConfig = configurationReturning(true);
-        var sut = new ProjectService(mockProjectRepository, null, mockConfig);
+        var sut = new ProjectService(mockProjectRepository, null, mockConfig, null);
 
         // Act
         var exception = catchThrowable(() -> sut.createGroup(LocalDateTime.now(), 0));
@@ -61,7 +61,7 @@ class ProjectServiceTest {
         when(mockProjectRepository.findById(anyInt())).thenReturn(Optional.empty());
         TaskGroupRepository mockGroupRepository = groupRepositoryReturning(false);
         var mockConfig = configurationReturning(true);
-        var sut = new ProjectService(mockProjectRepository, mockGroupRepository, mockConfig);
+        var sut = new ProjectService(mockProjectRepository, mockGroupRepository, mockConfig, null);
 
         // Act
         var exception = catchThrowable(() -> sut.createGroup(LocalDateTime.now(), 0));
@@ -81,7 +81,8 @@ class ProjectServiceTest {
         when(mockProjectRepository.findById(anyInt())).thenReturn(Optional.of(project));
         var mockConfig = configurationReturning(true);
         var taskGroupRepository = inMemoryGroupRepository();
-        var sut = new ProjectService(mockProjectRepository, taskGroupRepository, mockConfig);
+        var serviceWithInMemRepo = new TaskGroupService(taskGroupRepository, null);
+        var sut = new ProjectService(mockProjectRepository, taskGroupRepository, mockConfig, serviceWithInMemRepo);
 
         // Act
         GroupReadModel result = sut.createGroup(today, 1);
