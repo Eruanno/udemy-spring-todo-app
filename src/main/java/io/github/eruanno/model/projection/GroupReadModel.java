@@ -15,12 +15,14 @@ public class GroupReadModel {
      */
     private LocalDateTime deadline;
     private Set<GroupTaskReadModel> tasks;
+    private int id;
 
     public GroupReadModel(TaskGroup source) {
         description = source.getDescription();
         source.getTasks().stream().max(Comparator.comparing(Task::getDeadline))
                 .ifPresent(task -> deadline = task.getDeadline());
         tasks = source.getTasks().stream().map(GroupTaskReadModel::new).collect(Collectors.toSet());
+        id = source.getId();
     }
 
     public String getDescription() {
@@ -45,5 +47,13 @@ public class GroupReadModel {
 
     public void setTasks(final Set<GroupTaskReadModel> tasks) {
         this.tasks = tasks;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 }

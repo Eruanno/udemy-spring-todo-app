@@ -4,3 +4,8 @@ spring:
     enabled: true
     path: '/console'
   jpa.hibernate.ddl-auto: validate
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
