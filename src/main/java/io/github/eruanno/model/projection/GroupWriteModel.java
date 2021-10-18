@@ -1,5 +1,6 @@
 package io.github.eruanno.model.projection;
 
+import io.github.eruanno.model.Project;
 import io.github.eruanno.model.TaskGroup;
 
 import java.util.Set;
@@ -25,10 +26,11 @@ public class GroupWriteModel {
         this.tasks = tasks;
     }
 
-    public TaskGroup toGroup() {
+    public TaskGroup toGroup(final Project project) {
         var result = new TaskGroup();
         result.setDescription(description);
         result.setTasks(tasks.stream().map(source -> source.toTask(result)).collect(Collectors.toSet()));
+        result.setProject(project);
         return result;
     }
 }

@@ -1,5 +1,6 @@
 package io.github.eruanno.logic;
 
+import io.github.eruanno.model.Project;
 import io.github.eruanno.model.TaskGroup;
 import io.github.eruanno.model.TaskGroupRepository;
 import io.github.eruanno.model.TaskRepository;
@@ -19,7 +20,11 @@ public class TaskGroupService {
     }
 
     public GroupReadModel createGroup(GroupWriteModel source) {
-        TaskGroup result = taskGroupRepository.save(source.toGroup());
+        return createGroup(source, null);
+    }
+
+    GroupReadModel createGroup(final GroupWriteModel source, final Project project) {
+        TaskGroup result = taskGroupRepository.save(source.toGroup(project));
         return new GroupReadModel(result);
     }
 

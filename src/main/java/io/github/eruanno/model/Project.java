@@ -22,7 +22,7 @@ public class Project extends Resource {
         return steps;
     }
 
-    void setSteps(final Set<ProjectStep> steps) {
+    public void setSteps(final Set<ProjectStep> steps) {
         this.steps = steps;
     }
 
@@ -30,7 +30,7 @@ public class Project extends Resource {
         return groups;
     }
 
-    void setGroups(final Set<TaskGroup> taskGroups) {
+    public void setGroups(final Set<TaskGroup> taskGroups) {
         this.groups = taskGroups;
     }
 }

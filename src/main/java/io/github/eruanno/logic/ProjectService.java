@@ -7,6 +7,7 @@ import io.github.eruanno.model.TaskGroupRepository;
 import io.github.eruanno.model.projection.GroupReadModel;
 import io.github.eruanno.model.projection.GroupTaskWriteModel;
 import io.github.eruanno.model.projection.GroupWriteModel;
+import io.github.eruanno.model.projection.ProjectWriteModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,8 +30,8 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public Project create(Project source) {
-        return projectRepository.save(source);
+    public Project save(final ProjectWriteModel toSave) {
+        return projectRepository.save(toSave.toProject());
     }
 
     public GroupReadModel createGroup(LocalDateTime deadline, int projectId) {
@@ -48,7 +49,7 @@ public class ProjectService {
                         return task;
                     }
             ).collect(Collectors.toSet()));
-            return taskGroupService.createGroup(targetGroup);
+            return taskGroupService.createGroup(targetGroup, project);
         }).orElseThrow(() -> new IllegalArgumentException("Project with given id not found"));
     }
 }
