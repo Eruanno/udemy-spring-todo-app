@@ -4,6 +4,7 @@ import io.github.eruanno.logic.ProjectService;
 import io.github.eruanno.model.Project;
 import io.github.eruanno.model.ProjectStep;
 import io.github.eruanno.model.projection.ProjectWriteModel;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +48,7 @@ class ProjectController {
         return "projects";
     }
 
+    @Timed(value = "project.create.group", histogram = true, percentiles = {0.5, 0.95, 0.99})
     @PostMapping("/{id}")
     String createGroup(@ModelAttribute("project") ProjectWriteModel current, Model model, @PathVariable int id, @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime deadline) {
         try {
