@@ -45,7 +45,7 @@ public class Task extends AuditableResource {
 
     public void updateFrom(final Task source) {
         this.setDescription(source.getDescription());
-        this.setDone(source.isDone());
+        this.toggle();
         deadline = source.deadline;
         group = source.group;
     }

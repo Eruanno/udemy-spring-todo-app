@@ -54,7 +54,7 @@ class TaskGroupServiceTest {
     void toggleGroup_togglesGroup() {
         // Arrange.
         TaskGroup taskGroup = new TaskGroup();
-        taskGroup.setDone(false);
+        taskGroup.toggle();
         TaskGroupRepository mockTaskGroupRepository = getTaskGroupRepository(Optional.of(taskGroup));
         TaskRepository mockTaskRepository = getTaskRepository(false);
         TaskGroupService sut = new TaskGroupService(mockTaskGroupRepository, mockTaskRepository);

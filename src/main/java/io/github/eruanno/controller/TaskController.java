@@ -5,6 +5,7 @@ import io.github.eruanno.model.Task;
 import io.github.eruanno.model.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,12 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/tasks")
 class TaskController {
     public static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+    private final ApplicationEventPublisher applicationEventPublisher;
     private final TaskRepository repository;
     private final TaskService taskService;
 
-    TaskController(final TaskRepository repository, final TaskService taskService) {
+    TaskController(final ApplicationEventPublisher applicationEventPublisher, final TaskRepository repository, final TaskService taskService) {
+        this.applicationEventPublisher = applicationEventPublisher;
         this.repository = repository;
         this.taskService = taskService;
     }
@@ -77,7 +80,7 @@ class TaskController {
         if (!repository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-        repository.findById(id).ifPresent(task -> task.setDone(!task.isDone()));
+        repository.findById(id).map(Task::toggle).ifPresent(applicationEventPublisher::publishEvent);
         return ResponseEntity.noContent().build();
     }
 

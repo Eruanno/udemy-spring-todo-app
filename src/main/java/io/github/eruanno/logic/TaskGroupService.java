@@ -38,7 +38,7 @@ public class TaskGroupService {
         }
         TaskGroup result = taskGroupRepository.findById(groupId)
                 .orElseThrow(() -> new IllegalArgumentException("TaskGroup with given id not found."));
-        result.setDone(!result.isDone());
+        result.toggle();
         taskGroupRepository.save(result);
     }
 }

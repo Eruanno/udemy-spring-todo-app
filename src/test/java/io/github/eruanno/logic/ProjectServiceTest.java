@@ -156,6 +156,11 @@ class ProjectServiceTest {
                 return map.values().stream().filter(group -> !group.isDone())
                         .anyMatch(g -> g.getProject() != null && g.getProject().getId() == projectId);
             }
+
+            @Override
+            public boolean existsByDescription(final String description) {
+                return map.values().stream().anyMatch(group -> group.getDescription().equals(description));
+            }
         };
     }
 }

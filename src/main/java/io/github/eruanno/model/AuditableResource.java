@@ -1,10 +1,12 @@
 package io.github.eruanno.model;
 
+import io.github.eruanno.model.event.AuditableResourceEvent;
+
 import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-abstract class AuditableResource extends Resource {
+public abstract class AuditableResource extends Resource {
     @Embedded
     private Audit audit = new Audit();
     private boolean done;
@@ -13,7 +15,8 @@ abstract class AuditableResource extends Resource {
         return done;
     }
 
-    public void setDone(boolean done) {
-        this.done = done;
+    public AuditableResourceEvent toggle() {
+        this.done = !done;
+        return AuditableResourceEvent.changed(this);
     }
 }
